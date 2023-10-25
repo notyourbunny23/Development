@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
 
 void main() {
   runApp(const MyApp());
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp]); // Disable changing Display Orientation
 }
 
 class MyApp extends StatelessWidget {
@@ -34,6 +37,7 @@ class _TimerAppState extends State<TimerApp> {
   String? _previousImage;
   final AudioPlayer audioPlayer = AudioPlayer();
   late Timer _timer;
+  bool isFinished = false;
 
   Map<int, String> minuteToImage = {
     0: 'assets/0min.png',
@@ -59,6 +63,10 @@ class _TimerAppState extends State<TimerApp> {
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
+        if (isFinished == true && _currentMinute == 15) {
+          _resetTimer();
+        }
+
         if (_timerRunning) {
           _seconds++;
           _currentMinute = _seconds ~/ 60;
@@ -72,10 +80,11 @@ class _TimerAppState extends State<TimerApp> {
             _currentImage = minuteToImage[_currentMinute];
           }
 
-          // Проверка на достижение 15 минут
+          // 15 Min
           if (_currentMinute == 15) {
             _stopTimer();
             _playSound();
+            isFinished == true;
           }
         }
       });
@@ -107,6 +116,7 @@ class _TimerAppState extends State<TimerApp> {
       _currentImage = null;
       _previousImage = null;
       _timer.cancel();
+      _timerRunning = false;
     });
   }
 
@@ -126,12 +136,10 @@ class _TimerAppState extends State<TimerApp> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Positioned(
-              top: 20,
-              child: Text(
-                  style: TextStyle(fontSize: 18),
-                  textAlign: TextAlign.center,
-                  "Das Wasser zum Kochen bringen.\nDie Eier in das Wasser geben und\nauf Start drücken.")),
+          Text(
+              style: TextStyle(fontSize: 18),
+              textAlign: TextAlign.center,
+              "Das Wasser zum Kochen bringen.\nDie Eier in das Wasser geben und\nauf Start drücken."),
           Container(
             height: 200,
             padding: const EdgeInsets.only(
@@ -157,14 +165,6 @@ class _TimerAppState extends State<TimerApp> {
                         Color.fromARGB(255, 252, 151, 0))),
                 onPressed: _toggleTimer,
                 child: Text(_timerRunning ? 'Pause' : 'Start'),
-              ),
-              const SizedBox(width: 20),
-              ElevatedButton(
-                style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                        Color.fromARGB(255, 252, 151, 0))),
-                onPressed: _stopTimer,
-                child: const Text('Stop'),
               ),
               const SizedBox(width: 20),
               ElevatedButton(
