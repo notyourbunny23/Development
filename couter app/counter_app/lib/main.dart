@@ -30,15 +30,10 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+String enteredText = '';
+
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  bool showText = false;
-
-  void toggleText() {
-    setState(() {
-      showText = true;
-    });
-  }
 
   void _incrementCounter() {
     setState(() {
@@ -64,20 +59,20 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            if (showText)
-              const Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text(
-                    'Meine eigene Name',
-                    style: TextStyle(fontSize: 20),
-                  )),
+            TextField(
+              onChanged: (text) {
+                enteredText = text;
+              },
+              decoration:
+                  const InputDecoration(labelText: 'Put your Name here'),
+            ),
+            Text(enteredText.isNotEmpty ? enteredText : "Kein Name"),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _incrementCounter();
-          toggleText();
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
