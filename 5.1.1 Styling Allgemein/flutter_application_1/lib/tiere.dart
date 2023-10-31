@@ -141,15 +141,15 @@ class _BottomNavigationExampleState extends State<BottomNavigationExample> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_rounded),
+            icon: Icon(Icons.pets_rounded),
             label: 'Cat',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_rounded),
+            icon: Icon(Icons.pets_rounded),
             label: 'Frog',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_rounded),
+            icon: Icon(Icons.pets_rounded),
             label: 'Fox',
           ),
         ],
