@@ -31,34 +31,32 @@ class MyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: InkWell(
-            onTap: () {
-              ScaffoldMessenger.of(context);
-            },
-            child: Container(
-                height: 40,
-                width: 150,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.blue,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      spreadRadius: 1,
-                      blurRadius: 10,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: const Center(
-                    child: Text("Button Text",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white)))),
+        Container(
+          width: 150,
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.blue,
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.grey,
+                spreadRadius: 1,
+                blurRadius: 10,
+                offset: Offset(0, 2),
+              ),
+            ],
           ),
-        )
+          margin: const EdgeInsets.all(30),
+          child: InkWell(
+              onTap: () {
+                ScaffoldMessenger.of(context);
+              },
+              borderRadius: BorderRadius.circular(10.0),
+              child: const Center(
+                  child: Text("Button Text",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white)))),
+        ),
       ],
     );
   }
