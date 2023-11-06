@@ -1,131 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:categorized_dropdown/categorized_dropdown.dart';
+import 'dart:convert';
+import 'widgets.dart';
+import 'package:g_kasse/about.dart';
+import 'package:g_kasse/settings.dart';
 
 void main() {
   runApp(const MainApp());
 }
 
-class GDrawer extends StatelessWidget {
-  const GDrawer({super.key});
+class MainApp extends StatefulWidget {
+  const MainApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.all(10),
-        children: [
-          DrawerHeader(
-              child: Text(
-            "Menü",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-            ),
-          )),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Einstellungen'),
-            onTap: () {
-              Navigator.pop(context); //TODO: Navigate to Settings
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.info),
-            title: Text('About'),
-            onTap: () {
-              Navigator.pop(context); //TODO: Navigate to About Page
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  _AppState createState() => _AppState();
 }
 
-class GButton extends StatelessWidget {
-  const GButton({super.key});
+class _AppState extends State<MainApp> {
+  final List<CategorizedDropdownItem<String>>? items = [
+    CategorizedDropdownItem(text: 'Exhaust', subItems: [
+      SubCategorizedDropdownItem(text: 'Pipes', value: 'pipes'),
+      SubCategorizedDropdownItem(text: 'Mufflers', value: 'mufflers'),
+      SubCategorizedDropdownItem(text: 'Gaskets', value: 'gaskets'),
+    ]),
+    CategorizedDropdownItem(text: 'Engine Parts', subItems: [
+      SubCategorizedDropdownItem(text: 'Engine mounts', value: 'engine-mounts'),
+      SubCategorizedDropdownItem(text: 'Oil Filters', value: 'oil-filters'),
+    ]),
+    CategorizedDropdownItem(text: 'Fuel & Emission', subItems: [
+      SubCategorizedDropdownItem(
+          text: 'Fuel Injection', value: 'fuel-incection'),
+      SubCategorizedDropdownItem(text: '02 Sensor', value: 'o2-sensor'),
+    ]),
+    CategorizedDropdownItem(text: 'Other', value: 'Other'),
+  ];
+  String? value;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 56,
-      height: 56,
-      decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1, color: Color(0xFF79747E)),
-          borderRadius: BorderRadius.circular(3.80),
-        ),
-      ),
-      child: Icon(Icons.shopping_cart),
-    );
-  }
-}
-
-class GTextField extends StatelessWidget {
-  final TextEditingController _controller = TextEditingController();
-
-  GTextField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        height: 43,
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 11),
-        margin: const EdgeInsets.only(bottom: 10.0), // Padding bottom
-
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.black, // border color
-            width: 1.0, // border width
-          ),
-          borderRadius: BorderRadius.circular(2.0), // Round borders
-        ),
-        child: TextField(
-          style: const TextStyle(
-            fontSize: 13,
-          ),
-          controller: _controller,
-          decoration: const InputDecoration(
-            border: InputBorder.none, // No borderline
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // double screenWidth =
-    //     MediaQuery.of(context).size.width; // Finding a Screen Width in DIP
-
-    // double screenHeight =
-    //     MediaQuery.of(context).size.height; // Finding a Screen height in DIP
-
     return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        //'/': (context) => const ,
+        '/settings': (context) => const Settings(),
+        '/about': (context) => const About(),
+      },
+      title: 'G-Kasse',
       home: Scaffold(
-        backgroundColor: const Color(0xFFFEF7FF),
-        //backgroundColor: Colors.blue,
-        drawer: GDrawer(),
+        drawer: const GDrawer(),
         body: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+          padding: const EdgeInsets.all(24),
           children: [
             Image.asset("assets/logo_small.png"),
-            GTextField(),
-            GTextField(),
-            GTextField(),
-            GTextField(),
-            GTextField(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GButton(),
-              ],
-            )
-            //DropdownMenu(dropdownMenuEntries: dropdownMenuEntries)
+            CategorizedDropdown(
+              items: items,
+              value: value,
+              hint: const Text('Select auto parts'),
+              onChanged: (v) {
+                setState(() {
+                  value = value;
+                });
+              },
+            ),
           ],
         ),
       ),

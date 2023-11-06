@@ -73,7 +73,7 @@ class DetailsScreen extends StatelessWidget {
             Text('Details für $product'),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, "/");
+                Navigator.pop(context);
               },
               child: const Text('Zurück zum HomeScreen'),
             ),

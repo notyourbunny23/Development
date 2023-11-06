@@ -1,0 +1,89 @@
+[
+    {
+      "category": "Prozessoren Intel",
+      "name": "Intel Core i9 13900KS LGA1700 32MB Cache 3,0GHz retail",
+      "barcode": "123456789",
+      "price": 799.99,
+      "tax_rate": 0.19
+    },
+    {
+        "category": "Prozessoren Intel",
+        "name": "Intel Core i5 13600KF LGA1700 24MB Cache 3,5GHz retail",
+        "barcode": "223456789",
+        "price": 329.99,
+        "tax_rate": 0.19
+      },
+      {
+        "category": "Prozessoren Intel",
+        "name": "Intel Core i3 12100F LGA1700 12MB Cache 3,3GHz retail",
+        "barcode": "323456789",
+        "price": 109.99,
+        "tax_rate": 0.19
+      },
+
+      {
+        "category": "Prozessoren AMD",
+        "name": "AMD Ryzen 7 7800X3D,4.2 GHz,8 Kerne,16 Threads",
+        "barcode": "313456789",
+        "price": 399.99,
+        "tax_rate": 0.19
+      },
+      {
+        "category": "Prozessoren AMD",
+        "name": "AMD Ryzen 9 7950X3D 5,7GHz AM5 144MB Cache",
+        "barcode": "323456789",
+        "price": 691.99,
+        "tax_rate": 0.19
+      },
+      {
+        "category": "Prozessoren AMD",
+        "name": "AMD Ryzen 9 7900X3D 5,6GHz AM5 140MB Cache",
+        "barcode": "333456789",
+        "price": 549.99,
+        "tax_rate": 0.19
+      },
+
+      {
+        "category": "Mainboards Intel",
+        "name": "MSI Z790 Gaming Plus Wifi (Z790,S1700,ATX,DDR5)",
+        "barcode": "321456789",
+        "price": 239.99,
+        "tax_rate": 0.19
+      },
+      {
+        "category": "Mainboards Intel",
+        "name": "MSI PRO B760-P DDR4 II (B760,S1700,ATX,DDR4)",
+        "barcode": "322456789",
+        "price": 139.99,
+        "tax_rate": 0.19
+      },
+      {
+        "category": "Mainboards Intel",
+        "name": "Mainboard ASUS TUF GAMING B760-PLUS WIFI (Intel,1700,DDR5,ATX)",
+        "barcode": "324456789",
+        "price": 199.99,
+        "tax_rate": 0.19
+      },
+
+      {
+        "category": "Arbeitsspeicher"
+      },
+      {
+        "category": "Festplatten"
+      },
+      {
+        "category": "Grafikkarten"
+      },
+      {
+        "category": "PC-Gehäuse"
+      },
+      {
+        "category": "Netzteile"
+      },
+      {
+        "category": "Kühler"
+      }
+
+
+  ]
+  
