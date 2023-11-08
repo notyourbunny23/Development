@@ -1,12 +1,12 @@
 [
-    {
+     {
       "category": "Prozessoren Intel",
       "name": "Intel Core i9 13900KS LGA1700 32MB Cache 3,0GHz retail",
       "barcode": "123456789",
       "price": 799.99,
       "tax_rate": 0.19
-    },
-    {
+      },
+      {
         "category": "Prozessoren Intel",
         "name": "Intel Core i5 13600KF LGA1700 24MB Cache 3,5GHz retail",
         "barcode": "223456789",
