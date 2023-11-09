@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:categorized_dropdown/categorized_dropdown.dart';
 import 'gkasse_classen.dart';
 import 'widgets.dart';
 import 'package:g_kasse/about.dart';
@@ -20,6 +19,27 @@ List<Products> productList = [
 
 void main() {
   runApp(const MainApp());
+
+  Map<String, List<Products>> productCategories = {};
+
+  for (Products product in productList) {
+    String category = product.getCategory();
+
+    if (!productCategories.containsKey(category)) {
+      productCategories[category] = [];
+    }
+
+    productCategories[category]!.add(product);
+  }
+
+  for (String categoryName in productCategories.keys) {
+    List<Products> products = productCategories[categoryName]!;
+
+    print("$categoryName:");
+    for (Products product in products) {
+      print("  * ${product.name}");
+    }
+  }
 }
 
 class MainApp extends StatefulWidget {
@@ -30,24 +50,6 @@ class MainApp extends StatefulWidget {
 }
 
 class AppState extends State<MainApp> {
-  final List<CategorizedDropdownItem<String>>? items = [
-    CategorizedDropdownItem(text: 'Exhaust', subItems: [
-      SubCategorizedDropdownItem(text: 'Pipes', value: 'pipes'),
-      SubCategorizedDropdownItem(text: 'Mufflers', value: 'mufflers'),
-      SubCategorizedDropdownItem(text: 'Gaskets', value: 'gaskets'),
-    ]),
-    CategorizedDropdownItem(text: 'Engine Parts', subItems: [
-      SubCategorizedDropdownItem(text: 'Engine mounts', value: 'engine-mounts'),
-      SubCategorizedDropdownItem(text: 'Oil Filters', value: 'oil-filters'),
-    ]),
-    CategorizedDropdownItem(text: 'Fuel & Emission', subItems: [
-      SubCategorizedDropdownItem(text: 'Fuel Injection', value: 'fuel-incection'),
-      SubCategorizedDropdownItem(text: '02 Sensor', value: 'o2-sensor'),
-    ]),
-    CategorizedDropdownItem(text: 'Other', value: 'Other'),
-  ];
-  String? value;
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -64,16 +66,7 @@ class AppState extends State<MainApp> {
           padding: const EdgeInsets.all(24),
           children: [
             Image.asset("assets/logo_small.png"),
-            CategorizedDropdown(
-              items: items,
-              value: value,
-              hint: const Text('Select auto parts'),
-              onChanged: (v) {
-                setState(() {
-                  value = value;
-                });
-              },
-            ),
+            // DropDown Element
           ],
         ),
       ),

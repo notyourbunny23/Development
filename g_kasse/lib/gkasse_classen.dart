@@ -7,4 +7,9 @@ class Products {
 
 // Constructor
   Products(this.category, this.name, this.barcode, this.price, this.taxRate);
+
+//Methods
+  String getCategory() {
+    return category;
+  }
 }
