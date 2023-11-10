@@ -16,29 +16,54 @@ List<Products> productList = [
   Products("Mainboards Intel", "MSI PRO B760-P DDR4 II (B760, S1700, ATX, DDR4)", 322456789, 139.99, 0.19),
   Products("Mainboards Intel", "Mainboard ASUS TUF GAMING B760-PLUS WIFI (Intel, 1700, DDR5, ATX)", 324456789, 199.99, 0.19),
 ];
+const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
 
 void main() {
   runApp(const MainApp());
+}
 
-  Map<String, List<Products>> productCategories = {};
+class DynamicProdctsDropdown extends StatefulWidget {
+  String keyV;
+  List<Products> keyValues;
 
-  for (Products product in productList) {
-    String category = product.getCategory();
+  DynamicProdctsDropdown({required this.keyV, required this.keyValues, super.key});
 
-    if (!productCategories.containsKey(category)) {
-      productCategories[category] = [];
-    }
+  @override
+  State<DynamicProdctsDropdown> createState() => _DynamicProdctsDropdownState();
+}
 
-    productCategories[category]!.add(product);
-  }
+class _DynamicProdctsDropdownState extends State<DynamicProdctsDropdown> {
+  var val = "test";
+  @override
+  Widget build(BuildContext context) {
+    //   print(widget.keyV);
+    //   print(widget.keyValues);
+    return DropdownButton<String>(
+      isExpanded: true,
+      hint: Text(widget.keyValues[0].category),
+      items: widget.keyValues.map<DropdownMenuItem<String>>((value) {
+        return DropdownMenuItem<String>(
+          value: value.name,
+          child: Text(
+            value.name,
+            style: Theme.of(context).textTheme.labelMedium,
+            overflow: TextOverflow.ellipsis,
+          ),
+        );
+      }).toList(),
+      onChanged: (_) {},
+    );
 
-  for (String categoryName in productCategories.keys) {
-    List<Products> products = productCategories[categoryName]!;
-
-    print("$categoryName:");
-    for (Products product in products) {
-      print("  * ${product.name}");
-    }
+    // DropdownButton<String>(
+    //   value: widget.keyV,
+    //   onChanged: (_) {
+    //     // setState(() {
+    //     //   widget.keyV = newValue!;
+    //     // });
+    //     // print('Selected: $newValue');
+    //   },
+    //   hint: const Text('Select Value'),
+    // );
   }
 }
 
@@ -52,8 +77,18 @@ class MainApp extends StatefulWidget {
 class AppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
+    Map<String, List<Products>> productCategories = {};
+
+    for (Products product in productList) {
+      String category = product.getCategory();
+      if (!productCategories.containsKey(category)) {
+        productCategories[category] = [];
+      }
+      productCategories[category]!.add(product);
+    }
+
     return MaterialApp(
-      initialRoute: '/',
+      //initialRoute: '/',
       routes: {
         //'/': (context) => const ,
         '/settings': (context) => const Settings(),
@@ -67,6 +102,17 @@ class AppState extends State<MainApp> {
           children: [
             Image.asset("assets/logo_small.png"),
             // DropDown Element
+
+            Column(
+              children: productCategories.keys
+                  .map(
+                    (key) => DynamicProdctsDropdown(
+                      keyV: key,
+                      keyValues: productCategories[key]!,
+                    ),
+                  )
+                  .toList(),
+            ),
           ],
         ),
       ),
