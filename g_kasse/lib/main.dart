@@ -15,6 +15,12 @@ List<Products> productList = [
   Products("Mainboards Intel", "MSI Z790 Gaming Plus Wifi (Z790, S1700, ATX, DDR5", 321456789, 239.99, 0.19),
   Products("Mainboards Intel", "MSI PRO B760-P DDR4 II (B760, S1700, ATX, DDR4)", 322456789, 139.99, 0.19),
   Products("Mainboards Intel", "Mainboard ASUS TUF GAMING B760-PLUS WIFI (Intel, 1700, DDR5, ATX)", 324456789, 199.99, 0.19),
+  Products("Arbeitsspeicher", "", 0000, 00.00, 0.19),
+  Products("Festplatten", "", 0000, 00.00, 0.19),
+  Products("Grafikkarten", "", 0000, 00.00, 0.19),
+  Products("PC-Gehäuse", "", 0000, 00.00, 0.19),
+  Products("Netzteile", "", 0000, 00.00, 0.19),
+  Products("Kühler", "", 0000, 00.00, 0.19),
 ];
 const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
 
@@ -33,37 +39,53 @@ class DynamicProdctsDropdown extends StatefulWidget {
 }
 
 class _DynamicProdctsDropdownState extends State<DynamicProdctsDropdown> {
-  var val = "test";
+  //var val = "";
+
+  late String selectedValue; // Добавленная переменная для хранения выбранного значения
+
+  @override
+  void initState() {
+    super.initState();
+    selectedValue = widget.keyValues[0].name; // Устанавливаем начальное значение
+  }
+
   @override
   Widget build(BuildContext context) {
-    //   print(widget.keyV);
-    //   print(widget.keyValues);
-    return DropdownButton<String>(
-      isExpanded: true,
-      hint: Text(widget.keyValues[0].category),
-      items: widget.keyValues.map<DropdownMenuItem<String>>((value) {
-        return DropdownMenuItem<String>(
-          value: value.name,
-          child: Text(
-            value.name,
-            style: Theme.of(context).textTheme.labelMedium,
-            overflow: TextOverflow.ellipsis,
-          ),
-        );
-      }).toList(),
-      onChanged: (_) {},
-    );
+    double screenWidth = MediaQuery.of(context).size.width; // Finding a Screen Width in DIP
 
-    // DropdownButton<String>(
-    //   value: widget.keyV,
-    //   onChanged: (_) {
-    //     // setState(() {
-    //     //   widget.keyV = newValue!;
-    //     // });
-    //     // print('Selected: $newValue');
-    //   },
-    //   hint: const Text('Select Value'),
-    // );
+    double screenHeight = MediaQuery.of(context).size.height; // Finding a Screen height in DIP
+
+    return Column(
+      children: [
+        Text(
+          widget.keyValues[0].category,
+          style: TextStyle(fontWeight: FontWeight.bold),
+          textAlign: TextAlign.right,
+        ),
+        DropdownButton<String>(
+          isExpanded: true,
+          value: selectedValue,
+          hint: Text(widget.keyValues[0].category),
+          items: widget.keyValues.map<DropdownMenuItem<String>>((value) {
+            return DropdownMenuItem<String>(
+              value: value.name,
+              child: Text(
+                value.name,
+                style: Theme.of(context).textTheme.labelMedium,
+                overflow: TextOverflow.ellipsis,
+              ),
+            );
+          }).toList(),
+          onChanged: (newValue) {
+            setState(() {
+              selectedValue = newValue!;
+              //print("$selectedValue");
+              print(screenHeight);
+            });
+          },
+        ),
+      ],
+    );
   }
 }
 

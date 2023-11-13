@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:g_kasse/about.dart';
 import 'package:g_kasse/settings.dart';
+import 'main.dart';
 
 class GDrawer extends StatelessWidget {
   const GDrawer({super.key});
