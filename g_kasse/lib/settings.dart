@@ -12,7 +12,12 @@ class Settings extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
         children: [
-          Image.asset("assets/logo_small.png"),
+          GestureDetector(
+            child: Image.asset("assets/logo_small.png"),
+            onTap: () {
+              Navigator.popUntil(context, ModalRoute.withName('/'));
+            },
+          ),
           const Text(
             "Settings\n",
             style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),

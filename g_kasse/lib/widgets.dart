@@ -29,7 +29,7 @@ class TopBar extends StatelessWidget {
                   Scaffold.of(context).openDrawer(); // Open GDrawer
                 },
               ),
-              GestureDetector(child: Image.asset("assets/logo_small.png")), // Logo
+              Image.asset("assets/logo_small.png"), // Logo
               IconButton(
                 iconSize: 40,
                 icon: const Icon(Icons.person),
@@ -142,6 +142,179 @@ class _ProductInfoFieldsState extends State<ProductInfoFields> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ProductInfo extends StatelessWidget {
+  const ProductInfo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width; // Finding a Screen Width in DIP
+
+    return Column(
+      children: [
+        Column(
+          children: [
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Container(
+                  width: screenWidth,
+                  height: 33,
+                  //color: Colors.red,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Ausgewählte Produkt:"),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Container(
+                  width: screenWidth,
+                  height: 100,
+                  //color: Colors.red,
+                  child: Center(
+                    child: Container(
+                      height: 70,
+                      width: screenWidth - 10,
+                      padding: EdgeInsets.only(left: 15, top: 15),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(0.8),
+                        border: Border.all(
+                          color: Color(0xFF79747E),
+                          width: 0.8,
+                        ),
+                      ),
+                      child: const Text(
+                        'Selected Product Description', // TODO: Add $productDescription
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: screenWidth / 3 - 5,
+                  height: 30,
+                  //color: Colors.purple,
+                  child: Text("Einzelstück Preis:"),
+                ),
+                Container(
+                  width: screenWidth / 3 - 5,
+                  height: 30,
+                  //color: Colors.amber,
+                  child: Text("MwSt:"),
+                ),
+                Container(
+                  width: screenWidth / 3 - 5,
+                  height: 30,
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: screenWidth / 3 - 5,
+                  height: 60,
+                  //color: Colors.blue,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: screenWidth / 3 - 5,
+                        height: 60,
+                        child: Center(
+                          child: Container(
+                            height: 50,
+                            width: screenWidth - 10,
+                            padding: EdgeInsets.only(left: 15, top: 15),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(0.8),
+                              border: Border.all(
+                                color: Color(0xFF79747E),
+                                width: 0.8,
+                              ),
+                            ),
+                            child: const Text(
+                              'Price', // TODO: Add $productPrice
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: screenWidth / 3 - 5,
+                  height: 60,
+                  //color: Colors.yellow,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: screenWidth / 3 - 5,
+                        height: 60,
+                        child: Center(
+                          child: Container(
+                            height: 50,
+                            width: screenWidth - 10,
+                            padding: EdgeInsets.only(left: 15, top: 15),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(0.8),
+                              border: Border.all(
+                                color: Color(0xFF79747E),
+                                width: 0.8,
+                              ),
+                            ),
+                            child: const Text(
+                              'MwSt', // TODO: Add $productTax
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: screenWidth / 3 - 5,
+                  height: 60,
+                  //color: Colors.red,
+                  child: Placeholder(
+                    // Product Image
+                    fallbackHeight: 80,
+                    fallbackWidth: 80,
+                    strokeWidth: 0.5,
+                  ),
+                ),
+              ],
+            ),
+            // Row(
+            //   children: [
+            //     Container(width: 50, height: 50, color: Colors.red), // Первая ячейка
+            //     Container(width: 50, height: 50, color: Colors.green), // Вторая ячейка
+            //     Container(width: 50, height: 50, color: Colors.blue), // Третья ячейка
+            //     Container(width: 50, height: 50, color: Colors.yellow), // Четвертая ячейка
+            //     Container(width: 50, height: 100, color: Colors.orange), // Пятая ячейка с объединением двух строк
+            //   ],
+            // ),
+            // Row(
+            //   children: [
+            //     Container(width: 50, height: 50, color: Colors.purple), // Первая ячейка во втором ряду
+            //     Container(width: 50, height: 50, color: Colors.cyan), // Вторая ячейка во втором ряду
+            //     Container(width: 50, height: 50, color: Colors.pink), // Третья ячейка во втором ряду
+            //     Container(width: 50, height: 50, color: Colors.brown), // Четвертая ячейка во втором ряду
+            //   ],
+            // ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -138,8 +138,8 @@ class AppState extends State<MainApp> {
               TopBar(),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0, left: 15, right: 5, bottom: 15),
-                child: Container(
-                    height: 300,
+                child: SizedBox(
+                    height: 250, // Temp Edit. Change to 300
                     child: Scrollbar(
                       thickness: 5.0,
                       thumbVisibility: true,
@@ -163,20 +163,7 @@ class AppState extends State<MainApp> {
                     )),
               ),
               Divider(),
-              Container(
-                  height: 200,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text("Pavlo"),
-                          // TextField(
-                          //   decoration: InputDecoration(border: OutlineInputBorder(), labelText: "Item", enabled: false),
-                          // ),
-                        ],
-                      )
-                    ],
-                  ))
+              ProductInfo(),
             ],
           ),
         ),
