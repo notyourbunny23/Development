@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'gkasse_classen.dart';
 import 'widgets.dart';
 import 'package:g_kasse/about.dart';
@@ -15,17 +16,18 @@ List<Products> productList = [
   Products("Mainboards Intel", "MSI Z790 Gaming Plus Wifi (Z790, S1700, ATX, DDR5", 321456789, 239.99, 0.19),
   Products("Mainboards Intel", "MSI PRO B760-P DDR4 II (B760, S1700, ATX, DDR4)", 322456789, 139.99, 0.19),
   Products("Mainboards Intel", "Mainboard ASUS TUF GAMING B760-PLUS WIFI (Intel, 1700, DDR5, ATX)", 324456789, 199.99, 0.19),
-  Products("Arbeitsspeicher", "", 0000, 00.00, 0.19),
-  Products("Festplatten", "", 0000, 00.00, 0.19),
-  Products("Grafikkarten", "", 0000, 00.00, 0.19),
-  Products("PC-Gehäuse", "", 0000, 00.00, 0.19),
-  Products("Netzteile", "", 0000, 00.00, 0.19),
-  Products("Kühler", "", 0000, 00.00, 0.19),
+  Products("Arbeitsspeicher", "Arbeitsspeicher Item", 0000, 00.00, 0.19),
+  Products("Festplatten", "Festplatten Item", 0000, 00.00, 0.19),
+  Products("Grafikkarten", "Grafikkarten Item", 0000, 00.00, 0.19),
+  Products("PC-Gehäuse", "PC-Gehäuse Item", 0000, 00.00, 0.19),
+  Products("Netzteil", "Netzteil Item", 0000, 00.00, 0.19),
+  Products("Kühler", "Kühler Item", 0000, 00.00, 0.19),
 ];
 const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
 
 void main() {
   runApp(const MainApp());
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack); // Hide Statusbar
 }
 
 class DynamicProdctsDropdown extends StatefulWidget {
@@ -39,50 +41,62 @@ class DynamicProdctsDropdown extends StatefulWidget {
 }
 
 class _DynamicProdctsDropdownState extends State<DynamicProdctsDropdown> {
-  //var val = "";
-
-  late String selectedValue; // Добавленная переменная для хранения выбранного значения
+  late String selectedValue;
 
   @override
   void initState() {
     super.initState();
-    selectedValue = widget.keyValues[0].name; // Устанавливаем начальное значение
+    selectedValue = widget.keyValues[0].name; // Initial Value
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width; // Finding a Screen Width in DIP
+    //double screenWidth = MediaQuery.of(context).size.width; // Finding a Screen Width in DIP
 
-    double screenHeight = MediaQuery.of(context).size.height; // Finding a Screen height in DIP
+    //double screenHeight = MediaQuery.of(context).size.height; // Finding a Screen height in DIP
 
     return Column(
       children: [
-        Text(
-          widget.keyValues[0].category,
-          style: TextStyle(fontWeight: FontWeight.bold),
-          textAlign: TextAlign.right,
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+          child: Text(
+            widget.keyValues[0].category,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
-        DropdownButton<String>(
-          isExpanded: true,
-          value: selectedValue,
-          hint: Text(widget.keyValues[0].category),
-          items: widget.keyValues.map<DropdownMenuItem<String>>((value) {
-            return DropdownMenuItem<String>(
-              value: value.name,
-              child: Text(
-                value.name,
-                style: Theme.of(context).textTheme.labelMedium,
-                overflow: TextOverflow.ellipsis,
-              ),
-            );
-          }).toList(),
-          onChanged: (newValue) {
-            setState(() {
-              selectedValue = newValue!;
-              //print("$selectedValue");
-              print(screenHeight);
-            });
-          },
+        Container(
+          height: 50,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey, // Set the border color here
+              width: 1.0, // Set the border width here
+            ),
+            borderRadius: BorderRadius.circular(10.0), // Set the border radius here
+          ),
+          child: DropdownButton<String>(
+            padding: const EdgeInsets.only(
+              left: 10,
+              right: 10,
+            ),
+            isExpanded: true,
+            itemHeight: null, // Hide baseline
+            value: selectedValue,
+            items: widget.keyValues.map<DropdownMenuItem<String>>((value) {
+              return DropdownMenuItem<String>(
+                value: value.name,
+                child: Text(
+                  value.name,
+                  style: Theme.of(context).textTheme.labelMedium,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              );
+            }).toList(),
+            onChanged: (newValue) {
+              setState(() {
+                selectedValue = newValue!;
+              });
+            },
+          ),
         ),
       ],
     );
@@ -110,32 +124,64 @@ class AppState extends State<MainApp> {
     }
 
     return MaterialApp(
-      //initialRoute: '/',
       routes: {
-        //'/': (context) => const ,
         '/settings': (context) => const Settings(),
         '/about': (context) => const About(),
       },
       title: 'G-Kasse',
       home: Scaffold(
         drawer: const GDrawer(),
-        body: ListView(
-          padding: const EdgeInsets.all(24),
-          children: [
-            Image.asset("assets/logo_small.png"),
-            // DropDown Element
-
-            Column(
-              children: productCategories.keys
-                  .map(
-                    (key) => DynamicProdctsDropdown(
-                      keyV: key,
-                      keyValues: productCategories[key]!,
-                    ),
+        body: Container(
+          color: const Color(0xFFFEF7FF),
+          child: Column(
+            children: [
+              TopBar(),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0, left: 15, right: 5, bottom: 15),
+                child: SizedBox(
+                    height: 300,
+                    child: Expanded(
+                      child: Scrollbar(
+                        thickness: 5.0,
+                        thumbVisibility: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 15.0),
+                          child: ListView(
+                            children: [
+                              Column(
+                                children: productCategories.keys
+                                    .map(
+                                      (key) => DynamicProdctsDropdown(
+                                        keyV: key,
+                                        keyValues: productCategories[key]!,
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                child: Divider(),
+              ),
+              Expanded(
+                  child: Column(
+                children: [
+                  Row(
+                    children: [
+                      TextField(
+                        decoration: InputDecoration(border: OutlineInputBorder(), labelText: "Item", enabled: false),
+                      ),
+                    ],
                   )
-                  .toList(),
-            ),
-          ],
+                ],
+              ))
+            ],
+          ),
         ),
       ),
     );
