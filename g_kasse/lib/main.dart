@@ -138,48 +138,45 @@ class AppState extends State<MainApp> {
               TopBar(),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0, left: 15, right: 5, bottom: 15),
-                child: SizedBox(
+                child: Container(
                     height: 300,
-                    child: Expanded(
-                      child: Scrollbar(
-                        thickness: 5.0,
-                        thumbVisibility: true,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 15.0),
-                          child: ListView(
-                            children: [
-                              Column(
-                                children: productCategories.keys
-                                    .map(
-                                      (key) => DynamicProdctsDropdown(
-                                        keyV: key,
-                                        keyValues: productCategories[key]!,
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
-                            ],
-                          ),
+                    child: Scrollbar(
+                      thickness: 5.0,
+                      thumbVisibility: true,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 15.0),
+                        child: ListView(
+                          children: [
+                            Column(
+                              children: productCategories.keys
+                                  .map(
+                                    (key) => DynamicProdctsDropdown(
+                                      keyV: key,
+                                      keyValues: productCategories[key]!,
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          ],
                         ),
                       ),
                     )),
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                child: Divider(),
-              ),
-              Expanded(
+              Divider(),
+              Container(
+                  height: 200,
                   child: Column(
-                children: [
-                  Row(
                     children: [
-                      TextField(
-                        decoration: InputDecoration(border: OutlineInputBorder(), labelText: "Item", enabled: false),
-                      ),
+                      Row(
+                        children: [
+                          Text("Pavlo"),
+                          // TextField(
+                          //   decoration: InputDecoration(border: OutlineInputBorder(), labelText: "Item", enabled: false),
+                          // ),
+                        ],
+                      )
                     ],
-                  )
-                ],
-              ))
+                  ))
             ],
           ),
         ),
