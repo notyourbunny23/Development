@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:g_kasse/widgets.dart';
 
-class About extends StatelessWidget {
-  const About({super.key});
+class Profile extends StatelessWidget {
+  const Profile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class About extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
         children: [
           const Text(
-            "About\n",
+            "Profile\n",
             style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
           ),
           const Text(

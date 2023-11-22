@@ -8,16 +8,25 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFEF7FF),
+      appBar: AppBar(
+        iconTheme: IconThemeData.fallback(), // Leading Icon color
+        backgroundColor: Color(0xFFFEF7FF), // Background color
+        centerTitle: true,
+        title: Image.asset("assets/logo_small.png"), // Logo
+        actions: [
+          IconButton(
+            iconSize: 30,
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              // ...
+            },
+          ),
+        ],
+      ),
       drawer: const GDrawer(),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
         children: [
-          GestureDetector(
-            child: Image.asset("assets/logo_small.png"),
-            onTap: () {
-              Navigator.popUntil(context, ModalRoute.withName('/'));
-            },
-          ),
           const Text(
             "Settings\n",
             style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),

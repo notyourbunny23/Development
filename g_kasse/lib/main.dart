@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:g_kasse/about.dart';
 import 'package:g_kasse/settings.dart';
+import 'package:g_kasse/profile.dart';
 import 'package:g_kasse/widgets.dart';
 
 void main() {
   runApp(MainApp());
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]); // Hide the status bar
+  //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]); // Hide the status bar
 }
 
 class Products {
@@ -55,20 +56,31 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: {
-        '/settings': (context) => const Settings(),
-        '/about': (context) => const About(),
-      },
-      title: 'G-Kasse',
-      home: Scaffold(
-        drawer: const GDrawer(),
-        body: Column(
-          children: [
-            const TopBar(), // Topbar Menu
-            ProductDropdownWidget(productList: productList), // Main Content
-          ],
-        ),
-      ),
-    );
+        routes: {
+          '/settings': (context) => const Settings(),
+          '/about': (context) => const About(),
+          '/profile': (context) => const Profile(),
+        },
+        title: 'G-Kasse',
+        home: Scaffold(
+            appBar: AppBar(
+              iconTheme: IconThemeData.fallback(), // Leading Icon color
+              backgroundColor: Color(0xFFFEF7FF), // Background color
+              centerTitle: true,
+              title: Image.asset("assets/logo_small.png"), // Logo
+              actions: [
+                IconButton(
+                  iconSize: 30,
+                  icon: const Icon(Icons.person),
+                  onPressed: () {
+                    // ...
+                  },
+                ),
+              ],
+            ),
+            drawer: const GDrawer(),
+            body: SingleChildScrollView(
+              child: ProductDropdownWidget(productList: productList),
+            )));
   }
 }
