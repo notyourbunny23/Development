@@ -10,6 +10,7 @@ dependencies:
   categorized_dropdown: ^1.0.0
   flutter:
     sdk: flutter
+  flutter_icon_snackbar: ^1.1.4
 
 
 dev_dependencies:
@@ -24,3 +25,4 @@ flutter:
 #  - assets/data/data.json
   - assets/logo_large.png
   - assets/logo_small.png
+  - assets/images/image_placeholder.png
