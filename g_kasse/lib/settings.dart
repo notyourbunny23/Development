@@ -11,6 +11,8 @@ class Settings extends StatelessWidget {
       appBar: AppBar(
         iconTheme: IconThemeData.fallback(), // Leading Icon color
         backgroundColor: Color(0xFFFEF7FF), // Background color
+        shadowColor: Theme.of(context).colorScheme.shadow, // Shadow Color
+        elevation: 1, // Allways show Shadow
         centerTitle: true,
         title: Image.asset("assets/logo_small.png"), // Logo
         actions: [
@@ -24,15 +26,208 @@ class Settings extends StatelessWidget {
         ],
       ),
       drawer: const GDrawer(),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-        children: [
-          const Text(
-            "Settings\n",
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+      body: Container(
+        color: Color(0xFFFEF7FF), // TODO: Background Color is different then AppBar Background Color
+        child: Padding(
+          padding: const EdgeInsets.all(1.0),
+          child: Scrollbar(
+            thumbVisibility: true,
+            trackVisibility: false,
+            thickness: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: ListView(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: const Text(
+                          "Einstellungen",
+                          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        height: 40,
+                        alignment: Alignment.centerLeft,
+                        child: Text("Header Text"),
+                      ),
+                      Container(
+                        height: 100,
+                        child: const TextField(
+                          minLines: 2,
+                          maxLines: 2,
+                          //controller: _headerTextFieldController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: "Muster Firma, Muster Str. 100, 01234 Musterstadt",
+                            suffixIcon: Icon(Icons.edit),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 40,
+                        alignment: Alignment.centerLeft,
+                        child: Text("Footer Text"),
+                      ),
+                      Container(
+                        height: 100,
+                        child: const TextField(
+                          minLines: 2,
+                          maxLines: 2,
+                          //controller: _footerTextFieldController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: "Footer Text",
+                            suffixIcon: Icon(Icons.edit),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 40,
+                        alignment: Alignment.centerLeft,
+                        child: Text("Fortlaufende Rechnungsnummer"),
+                      ),
+                      Container(
+                        height: 80,
+                        child: const TextField(
+                          maxLines: 1,
+                          //controller: _reNrTextFieldController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: "xxxxxx",
+                            suffixIcon: Icon(Icons.edit),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: Divider(),
+                      ),
+                      Container(
+                        height: 40,
+                        alignment: Alignment.centerLeft,
+                        child: Text("Rechung Logo"),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: const Color(0xFF79747E),
+                            width: 0.8,
+                          ),
+                        ),
+                        height: 100,
+                        child: Image.asset(
+                          "assets/images/no_logo_image.png",
+                          width: 220,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 10, right: 5),
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: const Color(0xFF79747E),
+                                width: 0.8,
+                              ),
+                            ),
+                            child: IconButton(
+                              onPressed: () {}, // TODO: Add funktion
+                              icon: const Icon(Icons.image_outlined),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 10, left: 5),
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: const Color(0xFF79747E),
+                                width: 0.8,
+                              ),
+                            ),
+                            child: IconButton(
+                              onPressed: () {}, // TODO: Add funktion
+                              icon: const Icon(Icons.delete_outline_rounded),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 30),
+                            height: 40,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green, // Button Background Color
+                                foregroundColor: Colors.black, // Button Text Color
+                              ),
+                              onPressed: () {
+                                // TODO: Add funktion
+                              },
+                              child: const Text('Rechnung vorschau'),
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 20,
+                              bottom: 30,
+                              right: 5,
+                            ),
+                            height: 40,
+                            width: 150,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green, // Button Background Color
+                                foregroundColor: Colors.black, // Button Text Color
+                              ),
+                              onPressed: () {
+                                Navigator.popUntil(context, ModalRoute.withName('/'));
+                              },
+                              child: const Text('Abbrechen'),
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 20,
+                              bottom: 30,
+                              left: 5,
+                            ),
+                            height: 40,
+                            width: 150,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green, // Button Background Color
+                                foregroundColor: Colors.black, // Button Text Color
+                              ),
+                              onPressed: () {
+                                // TODO: Add funktion
+                              },
+                              child: const Text('Speichern'),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
-          const Placeholder(),
-        ],
+        ),
       ),
     );
   }

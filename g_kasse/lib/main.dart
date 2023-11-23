@@ -63,28 +63,25 @@ class MainApp extends StatelessWidget {
         },
         title: 'G-Kasse',
         home: Scaffold(
-          appBar: AppBar(
-            iconTheme: IconThemeData.fallback(), // Leading Icon color
-            backgroundColor: Color(0xFFFEF7FF), // Background color
-            centerTitle: true,
-            title: Image.asset("assets/logo_small.png"), // Logo
-            actions: [
-              IconButton(
-                iconSize: 30,
-                icon: const Icon(Icons.person),
-                onPressed: () {
-                  // ...
-                },
-              ),
-            ],
-          ),
-          drawer: const GDrawer(),
-          body: Container(
-            height: MediaQuery.of(context).size.height - 10,
-            child: SingleChildScrollView(
-              child: ProductDropdownWidget(productList: productList),
+            appBar: AppBar(
+              iconTheme: IconThemeData.fallback(), // Leading Icon color
+              backgroundColor: Color(0xFFFEF7FF), // Background color
+              shadowColor: Theme.of(context).colorScheme.shadow, // Shadow Color
+              elevation: 1, // Allways show Shadow
+              centerTitle: true,
+              title: Image.asset("assets/logo_small.png"), // Logo
+              actions: [
+                IconButton(
+                  iconSize: 30,
+                  icon: const Icon(Icons.person),
+                  onPressed: () {
+                    //
+                    print(MediaQuery.of(context).size.height);
+                  },
+                ),
+              ],
             ),
-          ),
-        ));
+            drawer: const GDrawer(),
+            body: ProductDropdownWidget(productList: productList)));
   }
 }

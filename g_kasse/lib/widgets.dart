@@ -8,22 +8,12 @@ String selectedProduct = "";
 double selectedProductPrice = 0.00;
 double selectedProducttaxRate = 0.00;
 int selectedProductbarcode = 0;
-//double dropDownSectionHeight = 220;
-double? screenHeight;
-double appBarHeight = AppBar().preferredSize.height;
-
-const AddedToCartMessage = SnackBar(
-  duration: Duration(milliseconds: 300),
-  content: Center(child: Text('\n\nAdded to Cart!\n\n')),
-  backgroundColor: Colors.green,
-);
 
 class GDrawer extends StatelessWidget {
   const GDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    screenHeight = MediaQuery.of(context).size.height;
     return Drawer(
       child: Column(
         children: [
@@ -83,8 +73,6 @@ class ProductDropdownWidget extends StatefulWidget {
 class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
   Map<String, Products?> selectedProducts = {};
 
-  final scrollController = ScrollController();
-
   TextEditingController _barcodeFieldController =
       TextEditingController(text: selectedProductbarcode != 0 ? "$selectedProductbarcode" : ""); // Change ControllerText only if selectedProductbarcode != 0
 
@@ -92,6 +80,16 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // Screen Size vars
+
+    //double screenHeight = MediaQuery.of(context).size.height; // Screen height
+    double screenWidth = MediaQuery.of(context).size.width; // Screen width
+    double bottomPartWidth = screenWidth - 100; // Bottom Part Width
+    double appBarHeight = AppBar().preferredSize.height; // AppBar height
+    double singlePiecePriceRowWidth = (MediaQuery.of(context).size.width / 2 - 30 - 10);
+    double taxRateRowWidth = (MediaQuery.of(context).size.width / 2 - 30 - 10);
+    double imageRowWidth = 60;
+
     Map<String, List<Products>> categorizedProducts = {};
 
     for (var product in widget.productList) {
@@ -113,7 +111,7 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
           child: Text(
             category,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -126,7 +124,7 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
             value: product,
             child: Text(
               product.name,
-              style: const TextStyle(fontSize: 14, overflow: TextOverflow.ellipsis),
+              style: const TextStyle(fontSize: 12, overflow: TextOverflow.ellipsis),
             ),
           ),
         );
@@ -193,206 +191,229 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
       );
     });
 
-    return IntrinsicHeight(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            height: 250,
-            decoration: const BoxDecoration(color: Color(0xFFFEF7FF), boxShadow: [
-              BoxShadow(
-                color: Color(0x3F000000),
-                blurRadius: 4,
-                offset: Offset(0, 4),
-                spreadRadius: 0,
-              )
-            ]),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: SizedBox(
-                child: ListView(
-                  controller: scrollController,
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.only(left: 1, top: 10, right: 15, bottom: 10),
-                  children: categoryWidgets,
-                ),
+    return Stack(
+      children: [
+        //
+        // Top Part with ListView.builder
+        // Building ListView
+        //
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 370, // Учитываем высоту Positioned в нижней части
+          child: Scrollbar(
+            thumbVisibility: true,
+            trackVisibility: false,
+            thickness: 5,
+            child: Container(
+              decoration: const BoxDecoration(color: Color(0xFFFEF7FF), boxShadow: [
+                BoxShadow(
+                  color: Color(0x3F000000),
+                  blurRadius: 4,
+                  offset: Offset(0, 4),
+                  spreadRadius: 0,
+                )
+              ]),
+              child: ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.only(left: 10, top: 10, right: 15, bottom: 10),
+                children: categoryWidgets,
               ),
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+        ),
 
-// Bottom Part
-
-          IntrinsicHeight(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                  height: 350, // Задайте фиксированную высоту нижней части
-                  //color: Colors.green,
-                  child: Center(
-                    child: Column(
+        // Bottom Part withPositioned
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 370,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+                width: bottomPartWidth - 20, // Bottom Part width - Padding left and right (each 10)
+                //color: Colors.blue,
+                child: Column(
+                  children: [
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: 30,
-                              child: const Text("Ausgewählte Produkt:"),
-                            ),
-                          ],
+                        Container(
+                          height: 30,
+                          child: Text("Ausgewählte Produkt:"),
                         ),
-                        Row(
-                          children: [
-                            Container(
-                              height: 50,
-                              width: MediaQuery.of(context).size.width - 20,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: const Color(0xFF79747E),
-                                  width: 0.8,
-                                ),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                  '$selectedProduct', // Current selected Item
-                                ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                            height: 60,
+                            width: MediaQuery.of(context).size.width - 20, // Bottom full width - Padding left and right (each 10)
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: const Color(0xFF79747E),
+                                width: 0.8,
                               ),
                             ),
-                          ],
-                        ),
-                        SizedBox(
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                '$selectedProduct', // Current selected Item
+                              ),
+                            )),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
                           height: 10,
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              color: Colors.blue,
-                              width: MediaQuery.of(context).size.width / 3,
-
-                              child: Text('Einzelstück Preis: '), // Current selected Item Price // TODO: change € to currecy variable
-                            ),
-                            Container(
-                              color: Colors.amber,
-                              width: MediaQuery.of(context).size.width / 3,
-                              //color: Colors.deepPurpleAccent,
-                              child: Text("MwSt.:"),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              height: 40,
-                              width: MediaQuery.of(context).size.width / 3,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: const Color(0xFF79747E),
-                                  width: 0.8,
-                                ),
-                              ),
-
-                              //
-                              child: Center(child: Text("$selectedProductPrice €")), // Current selected Item Price // TODO: change € to currecy variable
-                            ),
-                            Container(
-                              height: 40,
-                              width: MediaQuery.of(context).size.width / 3,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: const Color(0xFF79747E),
-                                  width: 0.8,
-                                ),
-                              ),
-
-                              //
-                              child: Center(
-                                  child: Text(
-                                '$selectedProducttaxRate %', // Current selected Item TaxRate
-                              )),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 3 - 60,
-                              child: Container(height: 60, width: 60, child: Image.asset("assets/images/image_placeholder.png")),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                                width: MediaQuery.of(context).size.width - 110,
-                                child: TextField(
-                                  onTap: () {
-                                    _barcodeFieldController.clear(); // Clear textField onTap
-                                  },
-                                  controller: _barcodeFieldController,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: 'Name / Barcode',
-                                    suffixIcon: Icon(Icons.search),
-                                  ),
-                                )),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 3 - 60,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: const Color(0xFF79747E),
-                                  width: 0.8,
-                                ),
-                              ),
-                              child: IconButton(
-                                onPressed: () {
-                                  if (selectedProduct != "") {
-                                    IconSnackBar.show(context: context, snackBarType: SnackBarType.save, label: 'Added to Cart'); // Added to Cart SnackBar Message
-                                  }
-                                }, // TODO: Add funktion
-                                icon: const Icon(Icons.shopping_cart_rounded),
-                              ),
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Container(width: MediaQuery.of(context).size.width - 100, child: Text("Automatisch in den Warenkorb hinzufügen")),
-                            Container(
-                              child: Switch(
-                                  value: AllwaysAddToCart_isSwitched,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      AllwaysAddToCart_isSwitched = value; // TODO: Add funktion
-                                    });
-                                  }),
-                            )
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width - 20,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  print(AppBar().preferredSize.height);
-                                }, // TODO: Add funktion
-                                child: const Text('Rechnung anzeigen'),
-                              ),
-                            ),
-                          ],
                         )
                       ],
                     ),
-                  )),
-            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: singlePiecePriceRowWidth - 10,
+                          child: Text('Einzelstück Preis: '),
+                        ), // Current selected Item Price // TODO: change € to currecy variable
+                        Container(
+                          width: taxRateRowWidth,
+                          child: Text('MwSt: '),
+                        ),
+                        Container(
+                          width: imageRowWidth,
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: 45,
+                          //width: MediaQuery.of(context).size.width / 3 + 20,
+                          width: singlePiecePriceRowWidth - 10, //TODO
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: const Color(0xFF79747E),
+                              width: 0.8,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "$selectedProductPrice €", // Current selected Item Price // TODO: change € to currecy variable
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: Container(
+                            height: 45,
+                            //width: MediaQuery.of(context).size.width / 3 + 5,
+                            width: taxRateRowWidth - 10, //TODO
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: const Color(0xFF79747E),
+                                width: 0.8,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "$selectedProducttaxRate %", // Current selected Item TaxRate
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 60,
+                          width: imageRowWidth,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Image.asset("assets/images/image_placeholder.png"), // Current selected Item Image
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            height: 60,
+                            width: MediaQuery.of(context).size.width - 90, // - 3x Padding and button width
+                            child: TextField(
+                              onTap: () {
+                                _barcodeFieldController.clear(); // Clear textField onTap
+                              },
+                              controller: _barcodeFieldController,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Name / Barcode',
+                                suffixIcon: Icon(Icons.search),
+                              ),
+                            )),
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: const Color(0xFF79747E),
+                              width: 0.8,
+                            ),
+                          ),
+                          child: IconButton(
+                            onPressed: () {
+                              if (selectedProduct != "") {
+                                IconSnackBar.show(context: context, snackBarType: SnackBarType.save, duration: Duration(milliseconds: 700), label: 'Added to Cart'); // Added to Cart SnackBar Message
+                              }
+                            }, // TODO: Add funktion
+                            icon: const Icon(Icons.shopping_cart_rounded),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width - 80,
+                          child: Text("Automatisch in den Warenkorb hinzufügen"),
+                        ),
+                        Container(
+                          width: 60,
+                          child: Switch(
+                              value: AllwaysAddToCart_isSwitched,
+                              onChanged: (value) {
+                                setState(() {
+                                  AllwaysAddToCart_isSwitched = value; // TODO: Add funktion
+                                });
+                              }),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width - 20,
+                          height: 40,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              print("AppBar height: $appBarHeight");
+                              print("Bottom Part width: $bottomPartWidth");
+                            }, // TODO: Add funktion
+                            child: const Text('Rechnung anzeigen'),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                )),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

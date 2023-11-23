@@ -12,6 +12,8 @@ class Profile extends StatelessWidget {
       appBar: AppBar(
         iconTheme: IconThemeData.fallback(), // Leading Icon color
         backgroundColor: Color(0xFFFEF7FF), // Background color
+        shadowColor: Theme.of(context).colorScheme.shadow, // Shadow Color
+        elevation: 1, // Allways show Shadow
         centerTitle: true,
         title: Image.asset("assets/logo_small.png"), // Logo
         actions: [
