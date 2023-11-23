@@ -8,9 +8,9 @@ String selectedProduct = "";
 double selectedProductPrice = 0.00;
 double selectedProducttaxRate = 0.00;
 int selectedProductbarcode = 0;
-double dropDownSectionHeight = 220;
-
-//539
+//double dropDownSectionHeight = 220;
+double? screenHeight;
+double appBarHeight = AppBar().preferredSize.height;
 
 const AddedToCartMessage = SnackBar(
   duration: Duration(milliseconds: 300),
@@ -23,6 +23,7 @@ class GDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
     return Drawer(
       child: Column(
         children: [
@@ -194,27 +195,26 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
 
     return IntrinsicHeight(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: Container(
-              height: 100,
-              decoration: const BoxDecoration(color: Color(0xFFFEF7FF), boxShadow: [
-                BoxShadow(
-                  color: Color(0x3F000000),
-                  blurRadius: 4,
-                  offset: Offset(0, 4),
-                  spreadRadius: 0,
-                )
-              ]),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SizedBox(
-                  child: ListView(
-                    controller: scrollController,
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.only(left: 1, top: 10, right: 15, bottom: 10),
-                    children: categoryWidgets,
-                  ),
+          Container(
+            height: 250,
+            decoration: const BoxDecoration(color: Color(0xFFFEF7FF), boxShadow: [
+              BoxShadow(
+                color: Color(0x3F000000),
+                blurRadius: 4,
+                offset: Offset(0, 4),
+                spreadRadius: 0,
+              )
+            ]),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                child: ListView(
+                  controller: scrollController,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.only(left: 1, top: 10, right: 15, bottom: 10),
+                  children: categoryWidgets,
                 ),
               ),
             ),
@@ -222,185 +222,173 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
           const SizedBox(
             height: 10,
           ),
-          Expanded(
-            child: Container(
-              height: 400,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 30,
-                          child: const Text("Ausgewählte Produkt:"),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width - 20,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: const Color(0xFF79747E),
-                              width: 0.8,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              '$selectedProduct', // Current selected Item
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10), // Space before next Row
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width / 3,
-                            child: const Text(
-                              'Einzelstück Preis: ', // Current selected Item Price // TODO: change € to currecy variable
-                            ),
-                          ),
-                        ),
-                        Container(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width / 3,
-                            child: Text(
-                              'MwSt.:', // Current selected Item TaxRate
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+// Bottom Part
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          IntrinsicHeight(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                  height: 350, // Задайте фиксированную высоту нижней части
+                  //color: Colors.green,
+                  child: Center(
+                    child: Column(
                       children: [
-                        Container(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width / 3,
-
-                            //color: Colors.red,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: const Color(0xFF79747E),
-                                width: 0.8,
+                        Row(
+                          children: [
+                            Container(
+                              height: 30,
+                              child: const Text("Ausgewählte Produkt:"),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width - 20,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: const Color(0xFF79747E),
+                                  width: 0.8,
+                                ),
                               ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
                                 child: Text(
-                                  '$selectedProductPrice €', // Current selected Item Price // TODO: change € to currecy variable
+                                  '$selectedProduct', // Current selected Item
                                 ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                        Container(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width / 3,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: const Color(0xFF79747E),
-                                width: 0.8,
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Center(
-                                child: Text(
-                                  '$selectedProducttaxRate %', // Current selected Item TaxRate
-                                ),
-                              ),
-                            ),
-                          ),
+                        SizedBox(
+                          height: 10,
                         ),
-                        Container(
-                          height: 60,
-                          child: Placeholder(child: Image.asset("assets/images/image_placeholder.png")),
-                        ),
-                      ],
-                    ),
+                        Row(
+                          children: [
+                            Container(
+                              color: Colors.blue,
+                              width: MediaQuery.of(context).size.width / 3,
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          child: Container(
-                              width: MediaQuery.of(context).size.width - 110,
-                              child: TextField(
-                                onTap: () {
-                                  // _barcodeFieldController.clear(); // Clear textField onTap
-                                },
-                                //controller: _barcodeFieldController,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Name / Barcode',
-                                  suffixIcon: Icon(Icons.search),
+                              child: Text('Einzelstück Preis: '), // Current selected Item Price // TODO: change € to currecy variable
+                            ),
+                            Container(
+                              color: Colors.amber,
+                              width: MediaQuery.of(context).size.width / 3,
+                              //color: Colors.deepPurpleAccent,
+                              child: Text("MwSt.:"),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 40,
+                              width: MediaQuery.of(context).size.width / 3,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: const Color(0xFF79747E),
+                                  width: 0.8,
                                 ),
+                              ),
+
+                              //
+                              child: Center(child: Text("$selectedProductPrice €")), // Current selected Item Price // TODO: change € to currecy variable
+                            ),
+                            Container(
+                              height: 40,
+                              width: MediaQuery.of(context).size.width / 3,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: const Color(0xFF79747E),
+                                  width: 0.8,
+                                ),
+                              ),
+
+                              //
+                              child: Center(
+                                  child: Text(
+                                '$selectedProducttaxRate %', // Current selected Item TaxRate
                               )),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 3 - 60,
+                              child: Container(height: 60, width: 60, child: Image.asset("assets/images/image_placeholder.png")),
+                            ),
+                          ],
                         ),
-                        Container(
-                            width: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: const Color(0xFF79747E),
-                                width: 0.8,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                                width: MediaQuery.of(context).size.width - 110,
+                                child: TextField(
+                                  onTap: () {
+                                    _barcodeFieldController.clear(); // Clear textField onTap
+                                  },
+                                  controller: _barcodeFieldController,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Name / Barcode',
+                                    suffixIcon: Icon(Icons.search),
+                                  ),
+                                )),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 3 - 60,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: const Color(0xFF79747E),
+                                  width: 0.8,
+                                ),
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  if (selectedProduct != "") {
+                                    IconSnackBar.show(context: context, snackBarType: SnackBarType.save, label: 'Added to Cart'); // Added to Cart SnackBar Message
+                                  }
+                                }, // TODO: Add funktion
+                                icon: const Icon(Icons.shopping_cart_rounded),
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Container(width: MediaQuery.of(context).size.width - 100, child: Text("Automatisch in den Warenkorb hinzufügen")),
+                            Container(
+                              child: Switch(
+                                  value: AllwaysAddToCart_isSwitched,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      AllwaysAddToCart_isSwitched = value; // TODO: Add funktion
+                                    });
+                                  }),
+                            )
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width - 20,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  print(AppBar().preferredSize.height);
+                                }, // TODO: Add funktion
+                                child: const Text('Rechnung anzeigen'),
                               ),
                             ),
-                            child: IconButton(
-                              onPressed: () {
-                                if (selectedProduct != "") {
-                                  IconSnackBar.show(context: context, snackBarType: SnackBarType.save, label: 'Added to Cart'); // Added to Cart SnackBar Message
-                                }
-                              }, // TODO: Add funktion
-                              icon: const Icon(Icons.shopping_cart_rounded),
-                            )),
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(width: MediaQuery.of(context).size.width - 100, child: Text("Automatisch in den Warenkorb hinzufügen")),
-                        Container(
-                          child: Switch(
-                              value: AllwaysAddToCart_isSwitched,
-                              onChanged: (value) {
-                                setState(() {
-                                  AllwaysAddToCart_isSwitched = value; // TODO: Add funktion
-                                });
-                              }),
+                          ],
                         )
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width - 20,
-                          child: ElevatedButton(
-                            onPressed: () {}, // TODO: Add funktion
-                            child: const Text('Rechnung anzeigen'),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
+                  )),
             ),
           ),
         ],
