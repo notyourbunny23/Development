@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:g_kasse/styles.dart';
 import 'package:g_kasse/about.dart';
 import 'package:g_kasse/settings.dart';
 import 'package:g_kasse/main.dart';
@@ -90,6 +91,9 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
     double taxRateRowWidth = (MediaQuery.of(context).size.width / 2 - 30 - 10);
     double imageRowWidth = 60;
 
+    //
+    // Sorting by Category Name
+    //
     Map<String, List<Products>> categorizedProducts = {};
 
     for (var product in widget.productList) {
@@ -234,7 +238,6 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
             padding: const EdgeInsets.all(10.0),
             child: Container(
                 width: bottomPartWidth - 20, // Bottom Part width - Padding left and right (each 10)
-                //color: Colors.blue,
                 child: Column(
                   children: [
                     Row(
@@ -279,7 +282,7 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
                         Container(
                           width: singlePiecePriceRowWidth - 10,
                           child: Text('Einzelstück Preis: '),
-                        ), // Current selected Item Price // TODO: change € to currecy variable
+                        ),
                         Container(
                           width: taxRateRowWidth,
                           child: Text('MwSt: '),
@@ -338,6 +341,9 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
                         ),
                       ],
                     ),
+                    Container(
+                      height: 10,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -359,7 +365,7 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
                           height: 60,
                           width: 60,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(8.0),
                             border: Border.all(
                               color: const Color(0xFF79747E),
                               width: 0.8,
@@ -386,6 +392,7 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
                           width: 60,
                           child: Switch(
                               value: AllwaysAddToCart_isSwitched,
+                              activeColor: Colors.green.shade900,
                               onChanged: (value) {
                                 setState(() {
                                   AllwaysAddToCart_isSwitched = value; // TODO: Add funktion
@@ -400,6 +407,7 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
                           width: MediaQuery.of(context).size.width - 20,
                           height: 40,
                           child: ElevatedButton(
+                            style: gButton,
                             onPressed: () {
                               print("AppBar height: $appBarHeight");
                               print("Bottom Part width: $bottomPartWidth");

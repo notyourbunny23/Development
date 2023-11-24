@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:g_kasse/styles.dart';
 import 'package:g_kasse/widgets.dart';
+import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -50,7 +54,10 @@ class Settings extends StatelessWidget {
                       Container(
                         height: 40,
                         alignment: Alignment.centerLeft,
-                        child: Text("Header Text"),
+                        child: Text(
+                          "Header Text",
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
                       ),
                       Container(
                         height: 100,
@@ -68,7 +75,10 @@ class Settings extends StatelessWidget {
                       Container(
                         height: 40,
                         alignment: Alignment.centerLeft,
-                        child: Text("Footer Text"),
+                        child: Text(
+                          "Footer Text",
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
                       ),
                       Container(
                         height: 100,
@@ -86,7 +96,10 @@ class Settings extends StatelessWidget {
                       Container(
                         height: 40,
                         alignment: Alignment.centerLeft,
-                        child: Text("Fortlaufende Rechnungsnummer"),
+                        child: Text(
+                          "Fortlaufende Rechnungsnummer",
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
                       ),
                       Container(
                         height: 80,
@@ -106,7 +119,10 @@ class Settings extends StatelessWidget {
                       Container(
                         height: 40,
                         alignment: Alignment.centerLeft,
-                        child: Text("Rechung Logo"),
+                        child: Text(
+                          "Rechung Logo",
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -166,10 +182,7 @@ class Settings extends StatelessWidget {
                             margin: EdgeInsets.only(top: 30),
                             height: 40,
                             child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green, // Button Background Color
-                                foregroundColor: Colors.black, // Button Text Color
-                              ),
+                              style: gButton,
                               onPressed: () {
                                 // TODO: Add funktion
                               },
@@ -190,12 +203,9 @@ class Settings extends StatelessWidget {
                             height: 40,
                             width: 150,
                             child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green, // Button Background Color
-                                foregroundColor: Colors.black, // Button Text Color
-                              ),
+                              style: gButton,
                               onPressed: () {
-                                Navigator.popUntil(context, ModalRoute.withName('/'));
+                                Navigator.pop(context);
                               },
                               child: const Text('Abbrechen'),
                             ),
@@ -209,12 +219,13 @@ class Settings extends StatelessWidget {
                             height: 40,
                             width: 150,
                             child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green, // Button Background Color
-                                foregroundColor: Colors.black, // Button Text Color
-                              ),
+                              style: gButton,
                               onPressed: () {
-                                // TODO: Add funktion
+                                // TODO: Add save funktion
+                                IconSnackBar.show(context: context, snackBarType: SnackBarType.save, duration: Duration(milliseconds: 700), label: 'Saved'); //Saved SnackBar Message
+                                Future.delayed(const Duration(seconds: 1), () {
+                                  Navigator.popUntil(context, ModalRoute.withName('/')); // Pop screen after SnackBar Message
+                                });
                               },
                               child: const Text('Speichern'),
                             ),
