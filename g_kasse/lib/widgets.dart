@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:g_kasse/styles.dart';
 import 'package:g_kasse/about.dart';
 import 'package:g_kasse/settings.dart';
+import 'package:g_kasse/profile.dart';
 import 'package:g_kasse/main.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 
@@ -9,6 +10,37 @@ String selectedProduct = "";
 double selectedProductPrice = 0.00;
 double selectedProducttaxRate = 0.00;
 int selectedProductbarcode = 0;
+
+class gKasseAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const gKasseAppBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      iconTheme: const IconThemeData.fallback(),
+      backgroundColor: const Color(0xFFFEF7FF),
+      shadowColor: Theme.of(context).colorScheme.shadow,
+      elevation: 1,
+      centerTitle: true,
+      title: Image.asset("assets/logo_small.png"),
+      actions: [
+        IconButton(
+          iconSize: 30,
+          icon: const Icon(Icons.person),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Profile()),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+}
 
 class GDrawer extends StatelessWidget {
   const GDrawer({super.key});

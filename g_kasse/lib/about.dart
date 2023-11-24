@@ -9,23 +9,7 @@ class About extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFFEF7FF),
       drawer: const GDrawer(),
-      appBar: AppBar(
-        iconTheme: IconThemeData.fallback(), // Leading Icon color
-        backgroundColor: Color(0xFFFEF7FF), // Background color
-        shadowColor: Theme.of(context).colorScheme.shadow, // Shadow Color
-        elevation: 1, // Allways show Shadow
-        centerTitle: true,
-        title: Image.asset("assets/logo_small.png"), // Logo
-        actions: [
-          IconButton(
-            iconSize: 30,
-            icon: const Icon(Icons.person),
-            onPressed: () {
-              // ...
-            },
-          ),
-        ],
-      ),
+      appBar: gKasseAppBar(),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
         children: [

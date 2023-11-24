@@ -12,23 +12,7 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFEF7FF),
-      appBar: AppBar(
-        iconTheme: IconThemeData.fallback(), // Leading Icon color
-        backgroundColor: Color(0xFFFEF7FF), // Background color
-        shadowColor: Theme.of(context).colorScheme.shadow, // Shadow Color
-        elevation: 1, // Allways show Shadow
-        centerTitle: true,
-        title: Image.asset("assets/logo_small.png"), // Logo
-        actions: [
-          IconButton(
-            iconSize: 30,
-            icon: const Icon(Icons.person),
-            onPressed: () {
-              // ...
-            },
-          ),
-        ],
-      ),
+      appBar: gKasseAppBar(),
       drawer: const GDrawer(),
       body: Container(
         color: Color(0xFFFEF7FF), // TODO: Background Color is different then AppBar Background Color
@@ -54,7 +38,7 @@ class Settings extends StatelessWidget {
                       Container(
                         height: 40,
                         alignment: Alignment.centerLeft,
-                        child: Text(
+                        child: const Text(
                           "Header Text",
                           style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                         ),
@@ -75,7 +59,7 @@ class Settings extends StatelessWidget {
                       Container(
                         height: 40,
                         alignment: Alignment.centerLeft,
-                        child: Text(
+                        child: const Text(
                           "Footer Text",
                           style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                         ),
@@ -96,7 +80,7 @@ class Settings extends StatelessWidget {
                       Container(
                         height: 40,
                         alignment: Alignment.centerLeft,
-                        child: Text(
+                        child: const Text(
                           "Fortlaufende Rechnungsnummer",
                           style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                         ),
@@ -119,7 +103,7 @@ class Settings extends StatelessWidget {
                       Container(
                         height: 40,
                         alignment: Alignment.centerLeft,
-                        child: Text(
+                        child: const Text(
                           "Rechung Logo",
                           style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                         ),
@@ -205,7 +189,7 @@ class Settings extends StatelessWidget {
                             child: ElevatedButton(
                               style: gButton,
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.pushReplacementNamed(context, '/');
                               },
                               child: const Text('Abbrechen'),
                             ),
@@ -224,7 +208,7 @@ class Settings extends StatelessWidget {
                                 // TODO: Add save funktion
                                 IconSnackBar.show(context: context, snackBarType: SnackBarType.save, duration: Duration(milliseconds: 700), label: 'Saved'); //Saved SnackBar Message
                                 Future.delayed(const Duration(seconds: 1), () {
-                                  Navigator.popUntil(context, ModalRoute.withName('/')); // Pop screen after SnackBar Message
+                                  Navigator.pushReplacementNamed(context, '/'); // Pop screen after SnackBar Message
                                 });
                               },
                               child: const Text('Speichern'),

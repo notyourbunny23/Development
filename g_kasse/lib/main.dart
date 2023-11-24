@@ -27,6 +27,11 @@ class MainApp extends StatelessWidget {
     Products("Prozessoren Intel", "Intel Core i9 13900KS LGA1700 32MB Cache 3.0GHz retail", 123456789, 799.99, 0.19),
     Products("Prozessoren Intel", "Intel Core i5 13600KF LGA1700 24MB Cache 3.5GHz retail", 223456789, 329.99, 0.19),
     Products("Prozessoren Intel", "Intel Core i3 12100F LGA1700 12MB Cache 3.3GHz retail", 323456789, 109.99, 0.19),
+    Products("Prozessoren Intel", "Intel Core i7 14700K LGA1700 33MB Cache 3,4GHz retail", 5032037278485, 472.00, 0.19),
+    Products("Prozessoren Intel", "Intel Core i5 12600K LGA1700 20MB Cache 3,7GHz retail", 5032037234108, 250.00, 0.19),
+    Products("Prozessoren Intel", "Intel Core i9 12900K LGA1700 30MB Cache 3,2GHz retail", 5032037234641, 449.00, 0.19),
+    Products("Prozessoren Intel", "Intel Core i5 13400F LGA1700 20MB Cache 2,5GHz tray", 8071505093005, 209.00, 0.19),
+    Products("Prozessoren Intel", "Intel Core i3 12100 LGA1700 12MB Cache 3,3GHz retail", 5032037238458, 160.00, 0.19),
     Products("Prozessoren AMD", "AMD Ryzen 7 7800X3D, 4.2 GHz, 8 Kerne, 16 Threads", 313456789, 399.99, 0.19),
     Products("Prozessoren AMD", "AMD Ryzen 9 7950X3D 5,7GHz AM5 144MB Cache", 323456789, 691.99, 0.19),
     Products("Prozessoren AMD", "AMD Ryzen 9 7900X3D 5,6GHz AM5 140MB Cache", 333456789, 549.99, 0.19),
@@ -56,32 +61,17 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        routes: {
-          '/settings': (context) => const Settings(),
-          '/about': (context) => const About(),
-          '/profile': (context) => const Profile(),
-        },
-        title: 'G-Kasse',
-        home: Scaffold(
-            appBar: AppBar(
-              iconTheme: IconThemeData.fallback(), // Leading Icon color
-              backgroundColor: Color(0xFFFEF7FF), // Background color
-              shadowColor: Theme.of(context).colorScheme.shadow, // Shadow Color
-              elevation: 1, // Allways show Shadow
-              centerTitle: true,
-              title: Image.asset("assets/logo_small.png"), // Logo
-              actions: [
-                IconButton(
-                  iconSize: 30,
-                  icon: const Icon(Icons.person),
-                  onPressed: () {
-                    //
-                    print(MediaQuery.of(context).size.height);
-                  },
-                ),
-              ],
-            ),
-            drawer: const GDrawer(),
-            body: ProductDropdownWidget(productList: productList)));
+      routes: {
+        '/settings': (context) => const Settings(),
+        '/about': (context) => const About(),
+        '/profile': (context) => const Profile(),
+      },
+      title: 'G-Kasse',
+      home: Scaffold(
+        appBar: const gKasseAppBar(),
+        drawer: const GDrawer(),
+        body: ProductDropdownWidget(productList: productList),
+      ),
+    );
   }
 }
