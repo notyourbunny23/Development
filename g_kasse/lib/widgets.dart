@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:g_kasse/products.dart';
+import 'package:g_kasse/addproduct.dart';
 import 'package:g_kasse/styles.dart';
 import 'package:g_kasse/about.dart';
 import 'package:g_kasse/settings.dart';
 import 'package:g_kasse/profile.dart';
-import 'package:g_kasse/main.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 
 String selectedProduct = "";
@@ -11,8 +12,8 @@ double selectedProductPrice = 0.00;
 double selectedProducttaxRate = 0.00;
 int selectedProductbarcode = 0;
 
-class gKasseAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const gKasseAppBar({Key? key}) : super(key: key);
+class GKasseAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const GKasseAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class gKasseAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class GDrawer extends StatelessWidget {
@@ -65,7 +66,18 @@ class GDrawer extends StatelessWidget {
             leading: const Icon(Icons.home),
             title: const Text('Home'),
             onTap: () {
-              Navigator.popUntil(context, ModalRoute.withName('/'));
+              Navigator.pushReplacementNamed(context, '/');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text('Produkt hinzufügen'),
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => AddProduct()),
+              // );
+              Navigator.pushReplacementNamed(context, '/addproduct');
             },
           ),
           ListTile(
@@ -74,7 +86,7 @@ class GDrawer extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Settings()),
+                MaterialPageRoute(builder: (context) => const SettingsPage()),
               );
             },
           ),
@@ -97,7 +109,7 @@ class GDrawer extends StatelessWidget {
 class ProductDropdownWidget extends StatefulWidget {
   final List<Products> productList;
 
-  const ProductDropdownWidget({Key? key, required this.productList}) : super(key: key);
+  const ProductDropdownWidget({super.key, required this.productList});
 
   @override
   _ProductDropdownWidgetState createState() => _ProductDropdownWidgetState();
@@ -109,13 +121,14 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
   TextEditingController _barcodeFieldController =
       TextEditingController(text: selectedProductbarcode != 0 ? "$selectedProductbarcode" : ""); // Change ControllerText only if selectedProductbarcode != 0
 
-  bool AllwaysAddToCart_isSwitched = false;
+  bool allwaysAddToCartIsSwitched = false;
 
   @override
   Widget build(BuildContext context) {
-    // Screen Size vars
-
-    //double screenHeight = MediaQuery.of(context).size.height; // Screen height
+    /*
+     Screen Size vars
+     double screenHeight = MediaQuery.of(context).size.height; // Screen height
+    */
     double screenWidth = MediaQuery.of(context).size.width; // Screen width
     double bottomPartWidth = screenWidth - 100; // Bottom Part Width
     double appBarHeight = AppBar().preferredSize.height; // AppBar height
@@ -123,9 +136,9 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
     double taxRateRowWidth = (MediaQuery.of(context).size.width / 2 - 30 - 10);
     double imageRowWidth = 60;
 
-    //
-    // Sorting by Category Name
-    //
+    /*
+     Sorting by Category Name
+    */
     Map<String, List<Products>> categorizedProducts = {};
 
     for (var product in widget.productList) {
@@ -139,8 +152,9 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
 
     categorizedProducts.forEach((category, products) {
       List<DropdownMenuItem<Products>> dropdownItems = [];
-
-      // Добавляем первый элемент в список с названием категории
+      /*
+       Adding first element with Categoryname
+      */
       dropdownItems.add(
         DropdownMenuItem(
           value: null,
@@ -153,13 +167,15 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
           ),
         ),
       );
-
+      /*
+       Adding other elements
+      */
       for (var product in products) {
         dropdownItems.add(
           DropdownMenuItem(
             value: product,
             child: Text(
-              product.name,
+              product.description,
               style: const TextStyle(fontSize: 12, overflow: TextOverflow.ellipsis),
             ),
           ),
@@ -185,7 +201,7 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
 
                       // Display current selected Item Description
                       if (value != null) {
-                        selectedProduct = value.name;
+                        selectedProduct = value.description;
                       }
 
                       // Display current selected Item Price
@@ -203,6 +219,8 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
                         selectedProductbarcode = value.barcode;
                         _barcodeFieldController.text = "$selectedProductbarcode";
                       }
+
+                      //TODO: Display current selected Item Image
 
                       // Reset other Dropdowns
                       for (var otherCategory in categorizedProducts.keys) {
@@ -260,7 +278,7 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
           ),
         ),
 
-        // Bottom Part withPositioned
+        // Bottom Part with Positioned
         Positioned(
           left: 0,
           right: 0,
@@ -276,7 +294,7 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
                       children: [
                         Container(
                           height: 30,
-                          child: Text("Ausgewählte Produkt:"),
+                          child: const Text("Ausgewählte Produkt:"),
                         ),
                       ],
                     ),
@@ -294,7 +312,7 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
                               ),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 '$selectedProduct', // Current selected Item
                               ),
@@ -313,11 +331,11 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
                       children: [
                         Container(
                           width: singlePiecePriceRowWidth - 10,
-                          child: Text('Einzelstück Preis: '),
+                          child: const Text('Einzelstück Preis: '),
                         ),
                         Container(
                           width: taxRateRowWidth,
-                          child: Text('MwSt: '),
+                          child: const Text('MwSt: '),
                         ),
                         Container(
                           width: imageRowWidth,
@@ -406,7 +424,8 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
                           child: IconButton(
                             onPressed: () {
                               if (selectedProduct != "") {
-                                IconSnackBar.show(context: context, snackBarType: SnackBarType.save, duration: Duration(milliseconds: 700), label: 'Added to Cart'); // Added to Cart SnackBar Message
+                                IconSnackBar.show(
+                                    context: context, snackBarType: SnackBarType.save, duration: const Duration(milliseconds: 700), label: 'Added to Cart'); // Added to Cart SnackBar Message
                               }
                             }, // TODO: Add funktion
                             icon: const Icon(Icons.shopping_cart_rounded),
@@ -418,16 +437,16 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
                       children: [
                         Container(
                           width: MediaQuery.of(context).size.width - 80,
-                          child: Text("Automatisch in den Warenkorb hinzufügen"),
+                          child: const Text("Automatisch in den Warenkorb hinzufügen"),
                         ),
                         Container(
                           width: 60,
                           child: Switch(
-                              value: AllwaysAddToCart_isSwitched,
+                              value: allwaysAddToCartIsSwitched,
                               activeColor: Colors.green.shade900,
                               onChanged: (value) {
                                 setState(() {
-                                  AllwaysAddToCart_isSwitched = value; // TODO: Add funktion
+                                  allwaysAddToCartIsSwitched = value; // TODO: Add funktion
                                 });
                               }),
                         ),

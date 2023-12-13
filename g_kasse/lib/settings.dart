@@ -1,18 +1,16 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:g_kasse/styles.dart';
 import 'package:g_kasse/widgets.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 
-class Settings extends StatelessWidget {
-  const Settings({super.key});
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFEF7FF),
-      appBar: gKasseAppBar(),
+      appBar: GKasseAppBar(),
       drawer: const GDrawer(),
       body: Container(
         color: Color(0xFFFEF7FF), // TODO: Background Color is different then AppBar Background Color
@@ -98,7 +96,7 @@ class Settings extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        child: Divider(),
+                        child: const Divider(),
                       ),
                       Container(
                         height: 40,
@@ -126,7 +124,7 @@ class Settings extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(top: 10, right: 5),
+                            margin: const EdgeInsets.only(top: 10, right: 5),
                             height: 50,
                             width: 50,
                             decoration: BoxDecoration(
@@ -142,7 +140,7 @@ class Settings extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 10, left: 5),
+                            margin: const EdgeInsets.only(top: 10, left: 5),
                             height: 50,
                             width: 50,
                             decoration: BoxDecoration(
@@ -163,7 +161,7 @@ class Settings extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(top: 30),
+                            margin: const EdgeInsets.only(top: 30),
                             height: 40,
                             child: ElevatedButton(
                               style: gButton,
@@ -206,7 +204,7 @@ class Settings extends StatelessWidget {
                               style: gButton,
                               onPressed: () {
                                 // TODO: Add save funktion
-                                IconSnackBar.show(context: context, snackBarType: SnackBarType.save, duration: Duration(milliseconds: 700), label: 'Saved'); //Saved SnackBar Message
+                                IconSnackBar.show(context: context, snackBarType: SnackBarType.save, duration: const Duration(milliseconds: 700), label: 'Saved'); //Saved SnackBar Message
                                 Future.delayed(const Duration(seconds: 1), () {
                                   Navigator.pushReplacementNamed(context, '/'); // Pop screen after SnackBar Message
                                 });

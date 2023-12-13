@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 final ButtonStyle gButton = ElevatedButton.styleFrom(
-  backgroundColor: Color(0xFFFEF7FF), // Button Background Color
+  backgroundColor: const Color(0xFFFEF7FF), // Button Background Color
   foregroundColor: Colors.black, // Button Text Color
   elevation: 2,
   shape: RoundedRectangleBorder(

@@ -8,15 +8,18 @@ environment:
 
 dependencies:
   categorized_dropdown: ^1.0.0
+  firebase_analytics: ^10.7.4
+  firebase_core: ^2.24.2
+  cloud_firestore:
   flutter:
     sdk: flutter
   flutter_icon_snackbar: ^1.1.4
+  flutter_lints: ^3.0.1
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
 
 flutter:
   uses-material-design: true
