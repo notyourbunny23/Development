@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:g_kasse/products.dart';
-import 'package:g_kasse/addproduct.dart';
+import 'package:g_kasse/addproduct.dart.bak';
 import 'package:g_kasse/styles.dart';
 import 'package:g_kasse/about.dart';
 import 'package:g_kasse/settings.dart';
@@ -23,7 +23,7 @@ class GKasseAppBar extends StatelessWidget implements PreferredSizeWidget {
       shadowColor: Theme.of(context).colorScheme.shadow,
       elevation: 1,
       centerTitle: true,
-      title: Image.asset("assets/logo_small.png"),
+      title: Image.asset("assets/logo/logo_small.png"),
       actions: [
         IconButton(
           iconSize: 30,

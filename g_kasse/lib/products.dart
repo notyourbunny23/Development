@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Products {
   final String category;
   final String description;
