@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:g_kasse/addproduct.dart.bak';
 import 'package:g_kasse/about.dart';
 import 'package:g_kasse/boxes.dart';
 import 'package:g_kasse/product_model.dart';
+import 'package:g_kasse/products.dart';
 import 'package:g_kasse/settings.dart';
 import 'package:g_kasse/profile.dart';
 import 'package:g_kasse/addproduct.dart';
@@ -41,8 +41,8 @@ class MainApp extends StatelessWidget {
       home: Scaffold(
         appBar: const GKasseAppBar(),
         drawer: const GDrawer(),
-        //body: ProductDropdownWidget(productList: productList),
-        body: addProduct(),
+        body: ProductDropdownWidget(productList: productList),
+        //body: AddProduct(),
       ),
     );
   }

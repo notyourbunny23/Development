@@ -8,3 +8,29 @@ final ButtonStyle gButton = ElevatedButton.styleFrom(
     borderRadius: BorderRadius.circular(8.0),
   ),
 );
+
+BoxDecoration TextFieldDecoration() {
+  return BoxDecoration(
+    borderRadius: BorderRadius.circular(10),
+    border: Border.all(
+      color: const Color(0xFF79747E),
+      width: 0.1,
+    ),
+  );
+}
+
+TextStyle TextFieldStyle() {
+  return TextStyle(
+    height: 1,
+    // Добавьте другие параметры стиля по вашему усмотрению
+  );
+}
+
+InputDecoration DropdownDecoration() {
+  return InputDecoration(
+    isDense: true,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8.0),
+    ),
+  );
+}

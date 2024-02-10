@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:g_kasse/products.dart';
-import 'package:g_kasse/addproduct.dart.bak';
 import 'package:g_kasse/styles.dart';
 import 'package:g_kasse/about.dart';
 import 'package:g_kasse/settings.dart';
