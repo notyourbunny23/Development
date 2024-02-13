@@ -1,11 +1,8 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:g_kasse/products.dart';
 import 'package:g_kasse/styles.dart';
 import 'package:g_kasse/about.dart';
 import 'package:g_kasse/settings.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 
 String selectedProduct = "";
@@ -25,7 +22,6 @@ class GKasseAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 1,
       centerTitle: true,
       title: Image.asset("assets/logo/logo_small.png"),
-      actions: [],
     );
   }
 
@@ -60,14 +56,28 @@ class GDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.add_circle),
+            leading: const Icon(Icons.shopping_cart),
+            title: const Text('Catalog'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, '/catalog');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_shopping_cart),
             title: const Text('Produkt hinzufügen'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, '/addproduct');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.euro),
+            title: const Text('Rechnung'),
             onTap: () {
               // Navigator.push(
               //   context,
               //   MaterialPageRoute(builder: (context) => AddProduct()),
               // );
-              Navigator.pushReplacementNamed(context, '/addproduct');
+              Navigator.pushReplacementNamed(context, '/receipt');
             },
           ),
           ListTile(
@@ -94,131 +104,6 @@ class GDrawer extends StatelessWidget {
       ),
     );
   }
-}
-
-List<AddedToCart> cartItems = [];
-
-double nettoBetrag = 0;
-double mwst = 0;
-double reBetrag = 0;
-double currentProduktNetto = 0;
-double currentProduktMwst = 0;
-double currentProduktBrutto = 0;
-
-class AddedToCart {
-  String description;
-  int amount;
-  double price;
-  double taxRate;
-
-  AddedToCart(this.description, this.amount, this.taxRate, this.price);
-
-  @override
-  String toString() {
-    return 'AddedToCart{$amount x $description, ${taxRate.toStringAsFixed(0) + "%"}, ${price.toStringAsFixed(2) + "€"}}';
-  }
-}
-
-Future<void> _showReceiptDialog(BuildContext context) async {
-  Future<String?> getStringFromPreferences(String key) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(key);
-  }
-
-  Future<void> saveStringToPreferences(String key, String value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(key, value);
-  }
-
-// Загрузка настроек при отображении диалога
-  String? headerText = await getStringFromPreferences('headerText');
-  String? footerText = await getStringFromPreferences('footerText');
-  String? receiptNumberText = await getStringFromPreferences('receiptNumberText');
-
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text(
-          'Rechung',
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-        ),
-        content: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "$headerText",
-              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
-            ),
-            const Text(
-              "------------------------------------------------------------------------------------",
-              style: TextStyle(fontSize: 11),
-            ),
-            Text(
-              "Rechunungsnummer: $receiptNumberText",
-              style: TextStyle(fontSize: 11),
-            ),
-            Text(
-              "Rechunungsdatum: ${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year} - ${DateTime.now().hour}:${DateTime.now().minute}",
-              style: TextStyle(fontSize: 11),
-            ),
-            const Text(
-              "------------------------------------------------------------------------------------",
-              style: TextStyle(fontSize: 11),
-            ),
-            Expanded(
-              child: Container(
-                height: MediaQuery.of(context).size.height - 20,
-                width: MediaQuery.of(context).size.width - 20,
-                child: ListView.builder(
-                  itemCount: cartItems.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(
-                        '${cartItems[index].amount} x ${cartItems[index].description}',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                      trailing: Text('${cartItems[index].price.toStringAsFixed(2)}€'),
-                    );
-                  },
-                ),
-              ),
-            ),
-            Text("Nettobetrag: ${nettoBetrag.toStringAsFixed(2)}€"),
-            Text("zzgl. Umsatzsteuer: ${mwst.toStringAsFixed(2)}€"),
-            Text("Rechungngsbetrag: ${reBetrag.toStringAsFixed(2)}€"),
-            const Text(
-              "------------------------------------------------------------------------------------",
-              style: TextStyle(fontSize: 11),
-            ),
-            Text(
-              "$footerText",
-              style: TextStyle(fontSize: 10),
-            ),
-          ],
-        ),
-        actions: <Widget>[
-          TextButton(
-            style: gButton,
-            onPressed: () {
-              // Закрыть AlertDialog
-              Navigator.of(context).pop();
-            },
-            child: Text('Ausdrucken'),
-          ),
-          TextButton(
-            style: gButton,
-            onPressed: () {
-              // Закрыть AlertDialog
-              Navigator.of(context).pop();
-            },
-            child: Text('Schießen'),
-          ),
-        ],
-      );
-    },
-  );
 }
 
 class ProductDropdownWidget extends StatefulWidget {
@@ -539,32 +424,8 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
                           child: IconButton(
                             onPressed: () {
                               if (selectedProduct != "") {
-                                // Add to cart
-                                AddedToCart newItem = AddedToCart(
-                                  "$selectedProduct",
-                                  1,
-                                  double.parse("$selectedProducttaxRate"),
-                                  double.parse("$selectedProductPrice"),
-                                );
-                                cartItems.add(newItem);
-                                print(cartItems.toString());
-
                                 IconSnackBar.show(
-                                    context: context,
-                                    snackBarType: SnackBarType.save,
-                                    duration: const Duration(milliseconds: 1000),
-                                    label: 'Zum Warenkorb hinzugefügt'); // Added to Cart SnackBar Message
-
-                                //! Calculating prices
-                                currentProduktBrutto = double.parse("$selectedProductPrice");
-                                currentProduktMwst = double.parse("$selectedProductPrice") / 100 * double.parse("$selectedProducttaxRate");
-                                currentProduktNetto = double.parse("$selectedProductPrice") - (double.parse("$selectedProductPrice") / 100 * double.parse("$selectedProducttaxRate"));
-
-                                reBetrag = reBetrag + currentProduktBrutto;
-                                nettoBetrag = nettoBetrag + currentProduktNetto;
-                                mwst = mwst + currentProduktMwst;
-
-                                //! END
+                                    context: context, snackBarType: SnackBarType.save, duration: const Duration(milliseconds: 700), label: 'Added to Cart'); // Added to Cart SnackBar Message
                               }
                             }, // TODO: Add funktion
                             icon: const Icon(Icons.shopping_cart_rounded),
@@ -599,7 +460,8 @@ class _ProductDropdownWidgetState extends State<ProductDropdownWidget> {
                           child: ElevatedButton(
                             style: gButton,
                             onPressed: () {
-                              _showReceiptDialog(context);
+                              print("AppBar height: $appBarHeight");
+                              print("Bottom Part width: $bottomPartWidth");
                             }, // TODO: Add funktion
                             child: const Text('Rechnung anzeigen'),
                           ),

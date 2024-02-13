@@ -22,7 +22,7 @@ BoxDecoration TextFieldDecoration() {
 TextStyle TextFieldStyle() {
   return TextStyle(
     height: 1,
-    // Добавьте другие параметры стиля по вашему усмотрению
+    fontSize: 14,
   );
 }
 
